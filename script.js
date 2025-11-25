@@ -491,4 +491,70 @@ document.getElementById('logMinutesBtn').addEventListener('click', async () => {
   
   msg.textContent = '';
   
-  if (!title) return (msg.textContent
+  if (!title) return (msg.textContent = '⚠️ Please enter the book name!');
+  if (isNaN(minutes) || minutes < 1 || minutes > 120)
+    return (msg.textContent = '⚠️ Enter minutes between 1 and 120.');
+
+  try {
+    const btn = document.getElementById('logMinutesBtn');
+    btn.textContent = "Saving...";
+    await logReadingMinutes(currentUser, minutes, title);
+    
+    minutesInput.value = '';
+    titleInput.value = '';
+    btn.textContent = "Saved! 🎉";
+    setTimeout(() => btn.textContent = "Save Minutes", 2000);
+    
+  } catch (err) {
+    msg.textContent = 'Error: ' + err.message;
+  }
+});
+
+// STOPWATCH BUTTON
+document.getElementById('stopwatchBtn').addEventListener('click', async () => {
+  const display = document.getElementById('stopwatchDisplay');
+  const btn = document.getElementById('stopwatchBtn');
+  const msg = document.getElementById('logMessage');
+  msg.textContent = '';
+
+  if (!stopwatchInterval) {
+    startTime = Date.now();
+    btn.textContent = '⏹ Stop';
+    btn.classList.add('btn-secondary');
+    
+    stopwatchInterval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      display.textContent = formatTime(elapsed);
+    }, 1000);
+    return;
+  }
+
+  const title = document.getElementById('bookTitleInput').value.trim();
+  if (!title) {
+    msg.textContent = '⚠️ Please write the book title first!';
+    return;
+  }
+
+  clearInterval(stopwatchInterval);
+  stopwatchInterval = null;
+  btn.textContent = 'Start Timer';
+  btn.classList.remove('btn-secondary');
+
+  const elapsedMinutes = Math.round((Date.now() - startTime) / 60000);
+  
+  if (elapsedMinutes < 1) {
+    msg.textContent = '⚠️ That was too short to count (< 1 min).';
+    display.textContent = "00:00";
+    return;
+  }
+
+  if (confirm(`Great job! You read for ${elapsedMinutes} minutes. Log it?`)) {
+    await logReadingMinutes(currentUser, elapsedMinutes, title);
+    document.getElementById('bookTitleInput').value = '';
+    display.textContent = "00:00";
+  }
+});
+
+
+/* ========= INIT ========= */
+loadDashboard();

@@ -1,398 +1,101 @@
-:root {
-  /* Fun Color Palette */
-  --primary: #4ECDC4;      /* Teal */
-  --primary-dark: #2CB5AC;
-  --accent: #FF6B6B;       /* Coral */
-  --accent-dark: #EE5253;
-  --yellow: #FFE66D;       /* Sunny Yellow */
-  --dark: #2F3542;
-  --light: #F7FFF7;
-  --white: #FFFFFF;
-  --success: #2ED573;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Library Reading Challenge</title>
   
-  --radius: 16px;
-  --shadow: 0 8px 16px rgba(0,0,0,0.08);
-  --font-main: 'Fredoka', sans-serif;
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;500;600;700&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-* {
-  box-sizing: border-box;
-}
+  <header>
+    <div class="header-content">
+      <h1>📚 Reading Challenge</h1>
+      <div id="profileIcon" class="profile">
+        <span id="profileInitial">U</span>
+        <div id="profileDropdown" class="dropdown">
+          <button id="logoutBtn">Logout 🚪</button>
+        </div>
+      </div>
+    </div>
+  </header>
 
-body {
-  font-family: var(--font-main);
-  background-color: #E0F7FA; /* Light blue background */
-  background-image: radial-gradient(#B2EBF2 10%, transparent 11%), radial-gradient(#B2EBF2 10%, transparent 11%);
-  background-size: 30px 30px;
-  background-position: 0 0, 15px 15px;
-  color: var(--dark);
-  margin: 0;
-  padding-bottom: 50px;
-}
+  <main class="dashboard-grid">
+    
+    <section id="welcomeSection" class="card welcome-card">
+      <h2 id="welcomeMessage">Welcome back!</h2>
+      <div class="streak-box">
+        <h3>🔥 Streak</h3>
+        <p id="readingStreakDisplay">Loading...</p>
+        <p id="dailyHighScoreDisplay" class="sub-text">Loading...</p>
+      </div>
+    </section>
 
-/* --- Header --- */
-header {
-  background: var(--white);
-  padding: 15px 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
+    <section id="communitySection" class="card full-width">
+      <h3>🌍 Community Goal</h3>
+      <div id="communityProgressBar" class="progress-container">
+        <div id="progressFill" class="progress-bar"></div>
+      </div>
+      <div id="progressText" class="progress-text">Loading...</div>
+    </section>
 
-.header-content {
-  max-width: 1000px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    <section id="logMinutesSection" class="card action-card">
+      <h3>⏱️ Log Your Time</h3>
+      <div class="input-group">
+        <input id="bookTitleInput" type="text" placeholder="📖 What book are you reading?" />
+        <input id="minutesInput" type="number" placeholder="Minutes" min="1" max="120" />
+      </div>
+      
+      <div class="button-group">
+        <button id="logMinutesBtn" class="btn btn-primary">Save Minutes</button>
+      </div>
+      <p id="logMessage" class="error-msg"></p>
 
-h1 {
-  font-size: 1.5rem;
-  margin: 0;
-  color: var(--primary-dark);
-}
+      <div class="stopwatch-area">
+        <p id="stopwatchDisplay" class="digital-clock">00:00</p>
+        <button id="stopwatchBtn" class="btn btn-secondary">Start Timer</button>
+      </div>
+    </section>
 
-/* --- Profile --- */
-.profile {
-  position: relative;
-  width: 45px;
-  height: 45px;
-  background-color: var(--accent);
-  color: white;
-  font-weight: bold;
-  font-size: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 3px solid white;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: transform 0.2s;
-}
+    <section id="userMinutesSection" class="card stat-card">
+      <h3>Your Total</h3>
+      <div class="big-number" id="userMinutes">0</div>
+      <p>minutes read</p>
+    </section>
 
-.profile:hover {
-  transform: scale(1.05);
-}
+    <section id="leaderboardSection" class="card leaderboard-card">
+      <h3>🏆 Top Readers</h3>
+      <div id="leaderboardContainer" class="leaderboard-list"></div>
+    </section>
 
-.dropdown {
-  display: none;
-  position: absolute;
-  top: 55px;
-  right: 0;
-  background: white;
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  min-width: 150px;
-  z-index: 10;
-}
+    <section id="bingoSection" class="card full-width bingo-card">
+      <h3>☀️ Summer Reading Bingo</h3>
+      <p>Tap a square to see the challenge details.</p>
+      <div id="bingoBoard"></div>
+    </section>
 
-.dropdown button {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  background: white;
-  text-align: left;
-  font-family: var(--font-main);
-  font-size: 1rem;
-  color: var(--dark);
-  cursor: pointer;
-}
+  </main>
 
-.dropdown button:hover {
-  background-color: #f1f1f1;
-}
+  <div id="bingoModal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3 id="modalTitle">Challenge</h3>
+      <p id="modalDescription">Description goes here.</p>
+      <div class="modal-actions">
+        <button id="modalCancelBtn" class="btn btn-outline">Cancel</button>
+        <button id="modalConfirmBtn" class="btn btn-primary">I Did It! ✅</button>
+      </div>
+    </div>
+  </div>
 
-/* --- Layout Grid --- */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  max-width: 1000px;
-  margin: 20px auto;
-  padding: 0 15px;
-}
+  <canvas id="confettiCanvas"></canvas>
 
-@media (min-width: 768px) {
-  .dashboard-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .full-width {
-    grid-column: span 2;
-  }
-}
-
-/* --- Cards --- */
-.card {
-  background: var(--white);
-  border-radius: var(--radius);
-  padding: 20px;
-  box-shadow: var(--shadow);
-  border: 2px solid transparent;
-  transition: transform 0.2s;
-}
-
-.card h3 {
-  margin-top: 0;
-  color: var(--primary-dark);
-  font-size: 1.25rem;
-}
-
-/* --- Streak Box --- */
-.streak-box {
-  background: #FFF3E0;
-  padding: 15px;
-  border-radius: 12px;
-  border: 2px solid #FFE0B2;
-  text-align: center;
-}
-
-.streak-box h3 { margin: 0 0 5px 0; color: #E67E22; }
-.streak-box p { margin: 0; font-weight: 700; font-size: 1.1rem; }
-.sub-text { font-size: 0.9rem; font-weight: 400 !important; color: #666; margin-top: 4px !important;}
-
-/* --- Progress Bar --- */
-.progress-container {
-  position: relative;
-  height: 35px;
-  background-color: #eee;
-  border-radius: 25px;
-  margin: 25px 0 10px 0;
-  border: 3px solid rgba(0,0,0,0.05);
-}
-
-.progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary), #26A69A);
-  width: 0%;
-  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 20px;
-  box-shadow: inset 0 2px 0 rgba(255,255,255,0.3);
-}
-
-.progress-text {
-  text-align: center;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #555;
-}
-
-/* Milestones */
-.milestone {
-  position: absolute;
-  top: -5px;
-  width: 3px;
-  height: 45px;
-  background: var(--dark);
-  opacity: 0.3;
-  z-index: 2;
-}
-.milestone-label {
-  position: absolute;
-  bottom: 115%;
-  font-size: 10px;
-  transform: translateX(-50%);
-  color: #777;
-  font-weight: 700;
-}
-
-/* --- Inputs & Buttons --- */
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-input {
-  padding: 12px 15px;
-  border: 2px solid #ddd;
-  border-radius: 12px;
-  font-family: var(--font-main);
-  font-size: 1rem;
-  transition: border-color 0.2s;
-}
-
-input:focus {
-  outline: none;
-  border-color: var(--primary);
-}
-
-.button-group {
-  display: flex;
-  gap: 10px;
-}
-
-.btn {
-  border: none;
-  padding: 12px 20px;
-  border-radius: 12px;
-  font-family: var(--font-main);
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  flex: 1;
-  transition: transform 0.1s, box-shadow 0.1s;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.btn:active {
-  transform: translateY(2px);
-}
-
-.btn-primary {
-  background-color: var(--primary);
-  box-shadow: 0 4px 0 var(--primary-dark);
-}
-
-.btn-primary:active {
-  box-shadow: 0 0 0 var(--primary-dark);
-}
-
-.btn-secondary {
-  background-color: var(--accent);
-  box-shadow: 0 4px 0 var(--accent-dark);
-}
-
-.btn-secondary:active {
-  box-shadow: 0 0 0 var(--accent-dark);
-}
-
-.error-msg {
-  color: var(--accent);
-  font-size: 0.9rem;
-  font-weight: bold;
-  text-align: center;
-  min-height: 20px;
-}
-
-/* --- Stopwatch --- */
-.stopwatch-area {
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 2px dashed #eee;
-  text-align: center;
-}
-
-.digital-clock {
-  font-family: 'Courier New', monospace;
-  font-size: 2rem;
-  font-weight: bold;
-  color: var(--dark);
-  background: #eee;
-  display: inline-block;
-  padding: 5px 15px;
-  border-radius: 8px;
-  margin: 0 0 10px 0;
-}
-
-/* --- Leaderboard --- */
-.leaderboard-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.leaderboard-bar {
-  display: flex;
-  align-items: center;
-  background: #f9f9f9;
-  padding: 5px;
-  border-radius: 30px;
-}
-
-.leaderboard-profile {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--primary);
-  color: white;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  flex-shrink: 0;
-  z-index: 2;
-}
-
-.leaderboard-label {
-  margin-left: 10px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-/* --- Big Stats --- */
-.big-number {
-  font-size: 3rem;
-  font-weight: 700;
-  color: var(--primary);
-  text-align: center;
-}
-.stat-card p {
-  text-align: center;
-  margin: 0;
-  font-weight: 600;
-  color: #777;
-}
-
-/* --- Bingo Board --- */
-#bingoBoard {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-#bingoBoard div {
-  aspect-ratio: 1 / 1; /* Makes them perfect squares */
-  position: relative;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  background-color: #f8f9fa;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 2px 0 #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-#bingoBoard div:active {
-  transform: translateY(2px);
-  box-shadow: none;
-}
-
-#bingoBoard div.completed {
-  background-color: var(--success);
-  border-color: #26af61;
-  color: white;
-  box-shadow: 0 2px 0 #26af61;
-}
-
-#bingoBoard div span {
-  padding: 2px;
-  line-height: 1.1;
-  word-wrap: break-word;
-  pointer-events: none; /* Allows click to pass through to div */
-}
-
-/* Confetti */
-#confettiCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-}
+  <script src="script.js"></script>
+</body>
+</html>

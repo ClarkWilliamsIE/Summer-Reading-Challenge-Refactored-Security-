@@ -1,20 +1,29 @@
-:root {
-  /* --- STRICT PALETTE --- */
-  --bg-color: #9ecfe7;      /* Light Blue Background */
-  --primary: #009be3;       /* Main Blue */
-  --accent: #f18f00;        /* Orange Accent */
-  --highlight: #ffe000;     /* Bright Yellow Highlight */
+/* --- IMPORT FONT --- */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
 
-  /* Structural Colors */
+:root {
+  /* --- STRICT BRAND PALETTE --- */
+  --bg-color: #9ecfe7;       /* Light Blue */
+  --primary: #009be3;        /* Vivid Blue */
+  --accent: #f18f00;         /* Orange */
+  --highlight: #ffe000;      /* Bright Yellow */
+
+  /* UTILITY COLORS (Necessary for UI structure) */
   --white: #ffffff;
-  --text-main: #2C3E50;     /* Dark slate for readability */
-  --text-muted: #607D8B;    /* Lighter grey for subtitles */
+  --text-dark: #2c3e50;      /* Dark slate for readability */
+  --text-light: #ffffff;
+
+  /* SLEEK UI VARIABLES */
+  --radius-card: 24px;       /* Very rounded cards */
+  --radius-btn: 50px;        /* Pill shaped buttons */
+  --radius-input: 16px;
   
-  /* Modern Spacing & Radius */
-  --radius: 12px;           /* Slightly tighter corners */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-  --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* Soft Shadows */
+  --shadow-soft: 0 10px 25px rgba(0, 155, 227, 0.15);
+  --shadow-hover: 0 15px 35px rgba(0, 155, 227, 0.25);
+  --shadow-float: 0 8px 15px rgba(0,0,0,0.05);
+
+  --font-main: 'Quicksand', sans-serif;
 }
 
 * {
@@ -23,38 +32,41 @@
 
 body {
   font-family: var(--font-main);
-  background-color: var(--bg-color); /* Your Light Blue */
-  color: var(--text-main);
+  background-color: var(--bg-color);
+  color: var(--text-dark);
   margin: 0;
   padding-bottom: 60px;
-  -webkit-font-smoothing: antialiased; /* Makes text look crisp */
-  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
 }
 
 /* --- Header --- */
 header {
   background: var(--white);
-  padding: 15px 0;
-  box-shadow: var(--shadow-sm);
+  padding: 15px 25px;
+  /* Floating header look */
+  margin: 20px;
+  border-radius: var(--radius-btn);
+  box-shadow: var(--shadow-float);
+  display: flex;
+  justify-content: center;
   position: sticky;
-  top: 0;
+  top: 20px;
   z-index: 100;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
 .header-content {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 20px;
+  width: 100%;
+  max-width: 1000px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 h1 {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   margin: 0;
-  color: var(--primary); /* Your Primary Blue */
+  color: var(--primary);
   font-weight: 700;
   letter-spacing: -0.5px;
 }
@@ -62,52 +74,57 @@ h1 {
 /* --- Profile --- */
 .profile {
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   background-color: var(--primary);
   color: var(--white);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 10px rgba(0, 155, 227, 0.3);
 }
 
 .profile:hover {
-  opacity: 0.9;
+  transform: scale(1.1);
 }
 
 .dropdown {
   display: none;
   position: absolute;
-  top: 50px;
+  top: 60px;
   right: 0;
   background: var(--white);
-  border-radius: 8px;
-  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-input);
+  box-shadow: var(--shadow-hover);
   overflow: hidden;
-  min-width: 160px;
+  min-width: 180px;
+  padding: 8px;
   z-index: 10;
-  border: 1px solid rgba(0,0,0,0.05);
+  border: none;
 }
 
 .dropdown button {
   width: 100%;
-  padding: 12px 16px;
+  padding: 12px 15px;
   border: none;
-  background: var(--white);
+  background: transparent;
   text-align: left;
-  font-size: 0.9rem;
-  color: var(--text-main);
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-dark);
   cursor: pointer;
-  transition: background 0.1s;
+  border-radius: 8px;
+  transition: all 0.2s;
 }
 
 .dropdown button:hover {
-  background-color: #f8f9fa;
+  background-color: #f4f9fd; /* Very faint blue */
   color: var(--primary);
 }
 
@@ -115,70 +132,96 @@ h1 {
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
-  max-width: 900px;
-  margin: 40px auto;
+  gap: 25px;
+  max-width: 1000px;
+  margin: 30px auto;
   padding: 0 20px;
 }
 
 @media (min-width: 768px) {
   .dashboard-grid {
-    grid-template-columns: 2fr 1fr; /* Bingo board gets more space */
+    grid-template-columns: 2fr 1.2fr;
   }
 }
 
-/* --- Cards --- */
+/* --- Cards (Sleek Panels) --- */
 .card {
   background: var(--white);
-  border-radius: var(--radius);
-  padding: 24px;
-  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-card);
+  padding: 30px;
+  box-shadow: var(--shadow-soft);
+  border: none;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  /* Subtle lift on hover for cards */
+  transform: translateY(-3px);
 }
 
 .card h3 {
   margin-top: 0;
-  margin-bottom: 15px;
-  color: var(--text-main);
-  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: var(--primary);
+  font-size: 1.2rem;
   font-weight: 700;
 }
 
-/* --- Streak Box (Modernized) --- */
+/* --- Streak Box (Hero Style) --- */
 .streak-box {
-  background: rgba(255, 224, 0, 0.15); /* Yellow with transparency for subtle look */
-  padding: 20px;
-  border-radius: var(--radius);
-  border: 1px solid var(--highlight); /* Thin yellow border */
+  background: linear-gradient(135deg, var(--highlight), #ffd500); /* Yellow Gradient */
+  padding: 25px;
+  border-radius: var(--radius-card);
   text-align: center;
-  margin-bottom: 24px;
+  color: var(--text-dark);
+  box-shadow: 0 10px 20px rgba(255, 224, 0, 0.3);
+  margin-bottom: 25px;
 }
 
-.streak-box h3 { margin: 0 0 5px 0; color: var(--accent); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-.streak-box p { margin: 0; font-weight: 800; font-size: 2rem; color: var(--text-main); }
-.sub-text { font-size: 0.85rem; color: var(--text-muted); margin-top: 5px !important; }
+.streak-box h3 { 
+  margin: 0; 
+  color: var(--text-dark); 
+  font-size: 0.85rem; 
+  opacity: 0.7; 
+  text-transform: uppercase; 
+  letter-spacing: 1.5px;
+}
+.streak-box p { 
+  margin: 5px 0; 
+  font-weight: 700; 
+  font-size: 2.5rem; 
+  color: var(--text-dark); 
+  line-height: 1;
+}
+.sub-text { 
+  font-size: 0.9rem; 
+  font-weight: 600 !important; 
+  opacity: 0.6;
+}
 
 /* --- Progress Bar --- */
 .progress-container {
-  height: 8px;
-  background-color: #ecf0f1;
-  border-radius: 4px;
-  margin: 20px 0 10px 0;
+  height: 12px;
+  background-color: #f0f4f8;
+  border-radius: 10px;
+  margin: 25px 0 10px 0;
   overflow: hidden;
 }
 
 .progress-bar {
   height: 100%;
-  background-color: var(--primary); /* Solid Blue */
+  background: var(--primary);
   width: 0%;
-  transition: width 0.6s ease;
-  border-radius: 4px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 10px;
 }
 
 .progress-text {
   text-align: right;
   font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-muted);
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: 5px;
 }
 
 .milestone, .milestone-label { display: none; }
@@ -188,66 +231,78 @@ h1 {
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 25px;
 }
 
 input {
-  padding: 12px;
-  border: 1px solid #dce1e6;
-  border-radius: 8px;
+  padding: 15px 20px;
+  border: 2px solid transparent;
+  border-radius: var(--radius-input);
   font-family: var(--font-main);
-  font-size: 0.95rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  background: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  background: #f4f9fd; /* Very light blue background */
+  color: var(--text-dark);
+  transition: all 0.2s;
 }
 
 input:focus {
   outline: none;
+  background: #fff;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(0, 155, 227, 0.15); /* Soft blue glow */
+  box-shadow: 0 0 0 4px rgba(0, 155, 227, 0.1);
 }
 
 .button-group {
   display: flex;
-  gap: 12px;
+  gap: 15px;
 }
 
 .btn {
   border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
+  padding: 14px 24px;
+  border-radius: var(--radius-btn); /* Pill shape */
   font-family: var(--font-main);
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 700;
+  font-size: 0.95rem;
   cursor: pointer;
   flex: 1;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
   color: white;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Primary: Blue */
 .btn-primary {
   background-color: var(--primary);
+  box-shadow: 0 4px 15px rgba(0, 155, 227, 0.3);
 }
 .btn-primary:hover {
-  background-color: #0087c6; /* Slightly darker blue */
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 155, 227, 0.4);
 }
+.btn-primary:active { transform: translateY(1px); }
 
 /* Secondary: Orange */
 .btn-secondary {
   background-color: var(--accent);
+  box-shadow: 0 4px 15px rgba(241, 143, 0, 0.3);
 }
 .btn-secondary:hover {
-  background-color: #d98100; /* Slightly darker orange */
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(241, 143, 0, 0.4);
 }
+.btn-secondary:active { transform: translateY(1px); }
+
 
 .error-msg {
-  color: #e74c3c; /* Standard red for errors is necessary, or use Orange */
-  font-size: 0.85rem;
-  font-weight: 500;
+  color: var(--accent); /* Using Orange for error to stick to palette */
+  font-size: 0.9rem;
+  font-weight: 700;
   text-align: center;
   min-height: 20px;
   margin-top: 10px;
@@ -257,85 +312,93 @@ input:focus {
 .stopwatch-area {
   margin-top: 20px;
   padding-top: 20px;
-  border-top: 1px solid #eee;
+  border-top: 2px dashed #e1e8ed;
   text-align: center;
 }
 
 .digital-clock {
-  font-family: 'SF Mono', 'Roboto Mono', monospace;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-main);
-  background: #f8f9fa;
+  font-family: var(--font-main); /* Keep Quicksand for consistency */
+  font-variant-numeric: tabular-nums; /* Prevents jumping numbers */
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  background: transparent;
   display: inline-block;
-  padding: 8px 16px;
-  border-radius: 6px;
-  margin-bottom: 12px;
+  padding: 0;
+  border: none;
+  margin-bottom: 10px;
 }
 
 /* --- Leaderboard --- */
 .leaderboard-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .leaderboard-bar {
   display: flex;
   align-items: center;
-  padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 10px;
+  border-radius: 12px;
+  transition: background 0.2s;
 }
 
-.leaderboard-bar:last-child { border-bottom: none; }
+.leaderboard-bar:hover {
+  background-color: #f8fbfc;
+}
 
 .leaderboard-profile {
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: var(--bg-color); /* Light Blue circle */
-  color: var(--primary);
+  background: linear-gradient(135deg, var(--accent), #ffab40);
+  color: white;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 14px;
   flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(241, 143, 0, 0.3);
 }
 
 .leaderboard-label {
-  margin-left: 12px;
-  font-size: 0.9rem;
-  color: var(--text-main);
+  margin-left: 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
 }
 
 /* --- Big Stats --- */
 .stat-card {
   text-align: center;
-  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .big-number {
-  font-size: 3rem;
-  font-weight: 800;
+  font-size: 4rem;
+  font-weight: 700;
   color: var(--primary);
   line-height: 1;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 .stat-card p {
   margin: 0;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #90a4ae;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-/* --- Modern Bingo Board --- */
+/* --- Sleek Bingo Board --- */
 #bingoBoard {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px; /* More space */
+  gap: 12px;
   width: 100%;
   margin-top: 10px;
 }
@@ -343,56 +406,53 @@ input:focus {
 #bingoBoard div {
   aspect-ratio: 1 / 1;
   position: relative;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: #fcfcfc;
+  border: none;
+  border-radius: 16px; /* Soft squares */
+  background-color: #f4f9fd; /* Very light blue tint */
   text-align: center;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  padding: 4px;
+  padding: 8px;
+  box-shadow: inset 0 0 0 2px transparent; /* border placeholder */
 }
 
 #bingoBoard div:hover {
-   transform: translateY(-2px);
-   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-   border-color: var(--primary);
-   z-index: 2;
+   transform: translateY(-4px) scale(1.02);
+   background-color: #fff;
+   box-shadow: 0 8px 20px rgba(0, 155, 227, 0.15);
+   color: var(--primary);
 }
 
-/* COMPLETED STATE - Uses your Highlight Yellow */
+#bingoBoard div:active {
+  transform: scale(0.95);
+}
+
+/* COMPLETED TILES - Brand Yellow */
 #bingoBoard div.completed {
-  background-color: var(--highlight); /* Yellow Background */
-  border-color: var(--highlight);
-  color: var(--text-main); /* Dark text on Yellow */
+  background-color: var(--highlight);
+  color: var(--text-dark);
+  box-shadow: 0 4px 12px rgba(255, 224, 0, 0.4);
+  transform: none;
   font-weight: 700;
 }
 
-/* When completed, remove hover lift to feel "solid" */
-#bingoBoard div.completed:hover {
-  transform: none;
-  box-shadow: none;
-}
-
 #bingoBoard div span {
-  font-size: 12px; 
+  font-size: 13px; 
   font-weight: 600;
   line-height: 1.2;
   word-wrap: break-word;
   pointer-events: none;
-  text-transform: capitalize; /* Clean capitalization */
-  color: inherit;
 }
 
-/* --- Modal --- */
+/* --- Modal (Modern & Clean) --- */
 .modal-overlay {
    position: fixed;
    top: 0; left: 0; right: 0; bottom: 0;
-   background: rgba(44, 62, 80, 0.6); /* Dark Blueish Tint */
-   backdrop-filter: blur(2px); /* Modern blur effect */
+   background: rgba(44, 62, 80, 0.4); /* Slight dark tint */
+   backdrop-filter: blur(8px); /* Frosted glass effect */
    display: flex;
    align-items: center;
    justify-content: center;
@@ -403,39 +463,40 @@ input:focus {
 
 .modal-content {
    background: var(--white);
-   padding: 30px;
-   border-radius: 16px;
-   max-width: 380px;
+   padding: 40px;
+   border-radius: 30px;
+   max-width: 400px;
    width: 90%;
    text-align: center;
-   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-   animation: slideUp 0.3s ease-out;
+   box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+   animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-@keyframes slideUp {
-   0% { transform: translateY(20px); opacity: 0; }
-   100% { transform: translateY(0); opacity: 1; }
+@keyframes popIn {
+   0% { transform: scale(0.9) translateY(20px); opacity: 0; }
+   100% { transform: scale(1) translateY(0); opacity: 1; }
 }
 
 .modal-content h3 {
    color: var(--primary);
-   font-size: 1.4rem;
-   margin: 0 0 15px 0;
+   font-size: 1.8rem;
+   margin: 0 0 10px 0;
 }
 
 .modal-content p {
-   font-size: 1rem;
-   color: var(--text-muted);
-   margin-bottom: 25px;
+   font-size: 1.1rem;
+   color: var(--text-dark);
+   margin-bottom: 30px;
+   opacity: 0.8;
 }
 
 .modal-actions {
    display: flex;
-   gap: 12px;
+   gap: 15px;
    justify-content: center;
 }
 
-/* Confetti Canvas */
+/* Confetti */
 #confettiCanvas {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;

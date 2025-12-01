@@ -1,18 +1,30 @@
 :root {
-  /* New Palette for Yellow Background */
-  --bg-color: #FFF9C4;     /* Creamy Yellow Background */
-  --primary: #0288D1;      /* Bright Blue (buttons/accents) */
-  --primary-dark: #01579B;
-  --accent: #F57C00;       /* Warm Orange (secondary buttons) */
-  --accent-dark: #E65100;
-  
-  --dark: #37474F;         /* Dark Grey Text */
+  /* --- BRAND PALETTE MAPPING --- */
+  /* Main Page Background (Light Blue) */
+  --bg-color: #9ecfe7;      
+
+  /* Primary Action / Headers (Vivid Blue) */
+  --primary: #009be3;       
+  --primary-dark: #0077b0;   /* Calculated darker shade for shadows/hover */
+
+  /* Secondary / Accents (Orange) */
+  --accent: #f18f00;        
+  --accent-dark: #b86d00;    /* Calculated darker shade */
+
+  /* Highlights / Streak / Wins (Bright Yellow) */
+  --highlight: #ffe000;
+  --highlight-dark: #e6c200; 
+
+  /* Text & Neutrals */
+  --dark: #37474F;           /* Dark Grey Text (unchanged for readability) */
   --light: #F7FFF7;
-  --white: #FFFFFF;        /* Card backgrounds */
-  --success: #43A047;      /* Green for completed bingo */
+  --white: #FFFFFF;          /* Card backgrounds */
+  
+  /* Success - Updated to match Brand Yellow for "Wins" */
+  --success: #ffe000;       
   
   --radius: 16px;
-  --shadow: 0 4px 12px rgba(0,0,0,0.1);
+  --shadow: 0 4px 12px rgba(0,0,0,0.15); /* Slightly darker shadow for contrast against blue bg */
   --font-main: 'Fredoka', sans-serif;
 }
 
@@ -23,7 +35,6 @@
 body {
   font-family: var(--font-main);
   background-color: var(--bg-color);
-  /* No spots or patterns anymore */
   color: var(--dark);
   margin: 0;
   padding-bottom: 50px;
@@ -37,7 +48,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 3px solid var(--primary);
+  border-bottom: 4px solid var(--primary); /* Increased thickness slightly */
 }
 
 .header-content {
@@ -60,7 +71,7 @@ h1 {
   position: relative;
   width: 45px;
   height: 45px;
-  background-color: var(--accent);
+  background-color: var(--primary); /* Changed to Blue to stand out */
   color: white;
   font-weight: bold;
   font-size: 22px;
@@ -134,27 +145,28 @@ h1 {
   border-radius: var(--radius);
   padding: 20px;
   box-shadow: var(--shadow);
-  border: 3px solid #fff; /* slight border for definition against yellow */
+  border: none; /* Removed white border, shadow is enough */
 }
 
 .card h3 {
   margin-top: 0;
-  color: var(--primary-dark);
+  color: var(--primary); /* Primary Blue */
   font-size: 1.25rem;
 }
 
-/* --- Streak Box --- */
+/* --- Streak Box (UPDATED to Brand Yellow) --- */
 .streak-box {
-  background: #FFF3E0; /* Light orange background for streak */
+  background: var(--highlight); /* Brand Yellow */
   padding: 15px;
   border-radius: 12px;
-  border: 2px solid var(--accent);
+  border: 2px solid var(--accent); /* Orange border */
   text-align: center;
+  color: var(--dark);
 }
 
-.streak-box h3 { margin: 0 0 5px 0; color: var(--accent-dark); }
-.streak-box p { margin: 0; font-weight: 700; font-size: 1.2rem; }
-.sub-text { font-size: 0.9rem; font-weight: 500 !important; color: #666; margin-top: 4px !important;}
+.streak-box h3 { margin: 0 0 5px 0; color: var(--dark); opacity: 0.8; }
+.streak-box p { margin: 0; font-weight: 700; font-size: 1.2rem; color: var(--dark); }
+.sub-text { font-size: 0.9rem; font-weight: 600 !important; color: var(--dark); margin-top: 4px !important; opacity: 0.7; }
 
 /* --- Progress Bar --- */
 .progress-container {
@@ -163,12 +175,13 @@ h1 {
   background-color: #E0E0E0;
   border-radius: 25px;
   margin: 25px 0 10px 0;
-  overflow: hidden; /* Hide overflow for cleaner look */
+  overflow: hidden;
   border: 2px solid #BDBDBD;
 }
 
 .progress-bar {
   height: 100%;
+  /* Gradient from Blue to Orange */
   background: linear-gradient(90deg, var(--primary), var(--accent));
   width: 0%;
   transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -182,7 +195,6 @@ h1 {
   color: var(--dark);
 }
 
-/* Milestone markers hidden for cleaner look in this theme version */
 .milestone, .milestone-label { display: none; }
 
 
@@ -233,25 +245,27 @@ input:focus {
 
 .btn:active { transform: translateY(2px); }
 
+/* Primary Button (Blue) */
 .btn-primary {
   background-color: var(--primary);
   box-shadow: 0 4px 0 var(--primary-dark);
 }
-.btn-primary:hover { background-color: #0277BD; }
+.btn-primary:hover { background-color: #0089c7; }
 .btn-primary:active { box-shadow: 0 0 0 var(--primary-dark); }
 
+/* Secondary Button (Orange) */
 .btn-secondary {
   background-color: var(--accent);
   box-shadow: 0 4px 0 var(--accent-dark);
 }
-.btn-secondary:hover { background-color: #EF6C00; }
+.btn-secondary:hover { background-color: #e08500; }
 .btn-secondary:active { box-shadow: 0 0 0 var(--accent-dark); }
 
 .btn-outline {
-    background: transparent;
-    border: 2px solid var(--dark);
-    color: var(--dark);
-    box-shadow: none;
+   background: transparent;
+   border: 2px solid var(--dark);
+   color: var(--dark);
+   box-shadow: none;
 }
 .btn-outline:hover { background: #eee;}
 
@@ -306,7 +320,7 @@ input:focus {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--primary);
+  background: var(--accent); /* Orange profile dots */
   color: white;
   font-weight: bold;
   display: flex;
@@ -343,11 +357,11 @@ input:focus {
   letter-spacing: 1px;
 }
 
-/* --- NEW Tidy Bingo Board --- */
+/* --- Bingo Board --- */
 #bingoBoard {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px; /* Slightly bigger gap */
+  gap: 8px;
   width: 100%;
   margin: 15px auto 0;
 }
@@ -355,24 +369,24 @@ input:focus {
 #bingoBoard div {
   aspect-ratio: 1 / 1;
   position: relative;
-  border: 3px solid #B0BEC5; /* Thicker border */
+  border: 3px solid #CFD8DC;
   border-radius: 12px;
   background-color: #ECEFF1;
   text-align: center;
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0 3px 0 #B0BEC5;
+  box-shadow: 0 4px 0 #CFD8DC;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 5px;
+  padding: 4px;
 }
 
 #bingoBoard div:hover {
-    transform: translateY(-2px);
-    background-color: #fff;
-    border-color: var(--primary);
+   transform: translateY(-2px);
+   background-color: #fff;
+   border-color: var(--primary);
 }
 
 #bingoBoard div:active {
@@ -380,17 +394,16 @@ input:focus {
   box-shadow: none;
 }
 
+/* Completed Tiles = Brand Yellow */
 #bingoBoard div.completed {
-  background-color: var(--success);
-  border-color: #2E7D32;
-  color: white;
-  box-shadow: 0 3px 0 #2E7D32;
+  background-color: var(--highlight); /* Brand Yellow */
+  border-color: var(--accent);        /* Orange Border */
+  color: var(--dark);                 /* Dark text for contrast on yellow */
+  box-shadow: 0 4px 0 var(--accent-dark);
 }
 
-/* New style for short words */
 #bingoBoard div span {
-  /* No auto-fit logic needed now */
-  font-size: 14px; 
+  font-size: 13px; 
   font-weight: 700;
   line-height: 1.1;
   word-wrap: break-word;
@@ -400,53 +413,53 @@ input:focus {
 
 /* --- Bingo MODAL Styles --- */
 .modal-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.6); /* Dimmed background */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 20px;
+   position: fixed;
+   top: 0; left: 0; right: 0; bottom: 0;
+   background: rgba(0,0,0,0.7); 
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 1000;
+   padding: 20px;
 }
 
 .hidden { display: none !important; }
 
 .modal-content {
-    background: white;
-    padding: 25px;
-    border-radius: var(--radius);
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-    box-shadow: var(--shadow);
-    border: 4px solid var(--primary);
-    animation: popIn 0.3s ease;
+   background: white;
+   padding: 25px;
+   border-radius: var(--radius);
+   max-width: 400px;
+   width: 100%;
+   text-align: center;
+   box-shadow: var(--shadow);
+   border: 4px solid var(--primary);
+   animation: popIn 0.3s ease;
 }
 
 @keyframes popIn {
-    0% { transform: scale(0.8); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+   0% { transform: scale(0.8); opacity: 0; }
+   100% { transform: scale(1); opacity: 1; }
 }
 
 .modal-content h3 {
-    color: var(--primary);
-    font-size: 1.5rem;
-    margin-top: 0;
+   color: var(--primary);
+   font-size: 1.5rem;
+   margin-top: 0;
 }
 
 .modal-content p {
-    font-size: 1.1rem;
-    line-height: 1.5;
-    color: var(--dark);
-    margin: 20px 0;
-    font-weight: 500;
+   font-size: 1.1rem;
+   line-height: 1.5;
+   color: var(--dark);
+   margin: 20px 0;
+   font-weight: 500;
 }
 
 .modal-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 25px;
+   display: flex;
+   gap: 10px;
+   margin-top: 25px;
 }
 
 /* Confetti */
